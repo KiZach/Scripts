@@ -1,4 +1,11 @@
-param([bool]$Datadisk)
+<#
+    .SYNOPSIS
+        Downloads and configures Azure VMs.
+#>
+
+Param(
+    [bool]$Datadisk
+)
 
 if ($Datadisk) {
     write-host "Partition disk"
