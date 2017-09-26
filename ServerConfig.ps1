@@ -4,7 +4,7 @@
 #>
 
 Param(
-    [stringl]$Datadisk
+    [string]$Datadisk
 )
 
 if ($Datadisk -eq "true") {
