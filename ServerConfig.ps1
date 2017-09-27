@@ -6,8 +6,10 @@
 Param(
     [string]$Datadisk,
     [string]$FirstDC,
+    [string]$ExtraDC,
     [string]$FQDNDomainName,
     [string]$NetbiosDomainName,
+    [string]$AdminName,
     [string]$RestorePassword
 )
 
@@ -22,3 +24,11 @@ if ($FirstDC -eq "true") {
     Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
     Install-ADDSForest -DomainName $FQDNDomainName -DomainNetbiosName $NetbiosDomainName -InstallDns -SafeModeAdministratorPassword $SafeModeAdministratorPassword -DatabasePath "F:\NTDS" -LogPath "F:\NTDS" -SysvolPath "F:\Sysvol" -Force      
 }
+
+if ($ExtraDC -eq "true") {
+    $SafeModeAdministratorPassword = $RestorePassword | ConvertTo-SecureString -asPlainText -Force
+    $ADCredential = New-Object System.Management.Automation.PSCredential($AdminName,$SafeModeAdministratorPassword)    
+    write-host "Configuring extra domain controller"
+    Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
+    Install-ADDSDomainController -DomainName $FQDNDomainName -InstallDns -Credential $ADCredential -DatabasePath "F:\NTDS" -LogPath "F:\NTDS" -SysvolPath "F:\Sysvol" -Force 
+ }
