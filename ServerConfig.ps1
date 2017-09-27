@@ -27,7 +27,8 @@ if ($FirstDC -eq "true") {
 
 if ($ExtraDC -eq "true") {
     $SafeModeAdministratorPassword = $RestorePassword | ConvertTo-SecureString -asPlainText -Force
-    $ADCredential = New-Object System.Management.Automation.PSCredential($AdminName,$SafeModeAdministratorPassword)    
+    $CredentialUser = "$NetbiosDomainName\$AdminName"
+    $ADCredential = New-Object System.Management.Automation.PSCredential($CredentialUser,$SafeModeAdministratorPassword)    
     write-host "Configuring extra domain controller"
     Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
     Install-ADDSDomainController -DomainName $FQDNDomainName -InstallDns -Credential $ADCredential -DatabasePath "F:\NTDS" -LogPath "F:\NTDS" -SysvolPath "F:\Sysvol" -Force 
