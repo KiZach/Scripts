@@ -31,5 +31,5 @@ if ($ExtraDC -eq "true") {
     $ADCredential = New-Object System.Management.Automation.PSCredential($CredentialUser,$SafeModeAdministratorPassword)    
     write-host "Configuring extra domain controller"
     Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
-    Install-ADDSDomainController -DomainName $FQDNDomainName -InstallDns -Credential $ADCredential -DatabasePath "F:\NTDS" -LogPath "F:\NTDS" -SysvolPath "F:\Sysvol" -Force 
+    Install-ADDSDomainController -DomainName $FQDNDomainName -InstallDns -Credential $ADCredential -SafeModeAdministratorPassword $SafeModeAdministratorPassword -DatabasePath "F:\NTDS" -LogPath "F:\NTDS" -SysvolPath "F:\Sysvol" -Force 
  }
