@@ -9,6 +9,7 @@ Param(
     [string]$ExtraDC,
     [string]$AADSync,
     [string]$ADFS,
+    [string]$WAP,
     [string]$FQDNDomainName,
     [string]$NetbiosDomainName,
     [string]$AdminName,
@@ -67,4 +68,9 @@ if ($ExtraDC -eq "true") {
  if ($ADFS -eq "true") {
     write-host "Installing ADFS"
     Install-WindowsFeature ADFS-Federation -IncludeManagementTools
+ }
+
+ if ($WAP -eq "true") {
+    write-host "Installing WAP"
+    Install-WindowsFeature Web-Application-Proxy -IncludeManagementTools
  }
